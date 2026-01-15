@@ -1,0 +1,34 @@
+<div class="activities-page">
+  <h2>🎭 Experiencias en Destino</h2>
+
+  <div class="city-selector">
+    <button 
+      *ngFor="let city of cities" 
+      (click)="onCityChange(city)"
+      [class.active]="selectedCity.name === city.name">
+      {{ city.name }}
+    </button>
+  </div>
+
+  <div *ngIf="loading" class="loader">Buscando tours en {{ selectedCity.name }}...</div>
+
+  <div class="activities-grid" *ngIf="!loading">
+    <div class="activity-card" *ngFor="let activity of activities">
+      <div class="img-wrapper">
+        <img [src]="activity.pictures[0]" [alt]="activity.name">
+        <span class="price-badge">{{ activity.price.amount }} {{ activity.price.currencyCode }}</span>
+      </div>
+      
+      <div class="card-info">
+        <h3>{{ activity.name }}</h3>
+        <p class="description" *ngIf="activity.shortDescription">
+          {{ activity.shortDescription }}
+        </p>
+        <div class="footer">
+          <span class="rating" *ngIf="activity.rating">⭐ {{ activity.rating | number:'1.1-1' }}</span>
+          <a [href]="activity.bookingLink" target="_blank" class="btn-details">Ver disponibilidad</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
